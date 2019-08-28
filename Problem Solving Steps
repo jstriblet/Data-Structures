@@ -1,0 +1,61 @@
+Problem Solving
+    Devise a plan for solving problems
+        1. Understand the problem
+            Restate the problem in my own words
+            What are the inputs?
+            Whare are the outputs?
+            Can the outputs be determined by the inputs?
+            How should I label the inportant pieces of data that are part of the problem?
+        2. Explore concrete examples
+            Start with simple examples
+                Write them out
+            Progress to more complex examples
+                Write them out
+            Explore examples with Empty inputs
+            Explore examples with Invalid inputs
+        3. Break it down
+            Explicity write out the steps you need to take
+        4. Solve/simplify
+            Solve a simpler problem if you have to
+            find the core dificulty in what your trying to do
+            tempirarily ignore that difficulty
+            write a simplified soloution
+            incorporate that dificulty back in
+        5. Look back and refactor
+            Can you check the results?
+            Can you dirive the result differently?
+            Can you understand it at a galnce
+            Can you use the result or method for some other problem?
+            Can you improve the performace of your soloution?
+            How have others solved this problem?
+
+    Master Common problems solving patterns
+
+        1. Frequency Counter (building two objects)
+            this patern uses obects or sets to collect values/frequencies of values
+            this can often avoid the need for nested loops or O(n^2) operations with arrays/ strings
+            Note: two independant loops are vastly better than two nested loops. 
+                for (let val of arr) --> arrays
+                for (let key in obj) --> Objects
+            USED WHEN COMPAIRING MULTIPLE SETS OF DATA
+
+        2. Multiple pointers
+            Using values or pointers that correspond to an index or position and move towards the beginning, end or middle based on a certian condition
+            very efficent for solving problems with minimal space complexity
+            USED WHEN COMPAIRING ONE SET OF DATA
+
+        3. Sliding Window 
+            This pattern involves creating a window which can either be an array or number from one position to another
+            Depending on a certian condition, the eindow wither increases or closes (and a new window is created)
+                step one (calulate first window)
+                subtract previoud value from window
+                add next value to window
+                contenu loop
+            USED WHEN KEEPING TRACK OF A SUBSET OF DATA IN AN ARRAY/STRING etc.
+        
+        4. Divide and Conquer
+            this pattern involves dividing a dataset into smaller chunks and then repeating a propcess with a subset of data
+            This pattern can tremendiouslt reduce time complexity
+            GREAT FRO SEAFCHIGN A SORTED ARRAY OF INTEGERS
+
+
