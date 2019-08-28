@@ -5,7 +5,6 @@ class Node {
         this.right = null;
     }
 }
-
  node = new Node(10);
  node.right = new Node(15);
  node.left = new Node(7);
@@ -29,5 +28,5 @@ const BFS = function(root, val){
     return [undefined, visited]
 }
 
-console.log(node)
+console.log(BFS(node, 9))
 console.log(node)
