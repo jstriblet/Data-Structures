@@ -58,24 +58,20 @@ class BinarySearchTree {
         return false
     }
     // Breadth First Search
-    BFS(root, val) {
+    BFS() {
         let queue = new Array();
         let visited = new Array();
-        queue.push(root);
+        queue.push(this.root);
 
         while (queue.length) {
             current = queue.shift()
             visited.push(current.value)
-            if (current.value === val) {
-                return [current, visited]
-            } else {
-                if (current.left) queue.push(current.left)
-                if (current.right) queue.push(current.right)
-            }
+            if (current.left) queue.push(current.left)
+            if (current.right) queue.push(current.right)
         }
-        return [undefined, visited]
+        return visited
     }
-    // Depth First Search - Pre-order
+    // Depth First Search - Pre-Order
     DFSPre() {
         let visited = [];
         let current = this.root;
@@ -83,6 +79,32 @@ class BinarySearchTree {
         const traverse = node => {
             visited.push(node.value);
             if (node.left) traverse(node.left);
+            if (node.right) traverse(node.right);
+        }
+        traverse(current);
+        return visited;
+    }
+    // Depth First Search - Post-Order
+    DFSPost() {
+        let visited = [];
+        let current = this.root;
+
+        const traverse = node => {
+            if (node.left) traverse(node.left);
+            if (node.right) traverse(node.right);
+            visited.push(node.value);
+        }
+        traverse(current);
+        return visited;
+    }
+    // Depth First Search - In-Order
+    DFSIn() {
+        let visited = [];
+        let current = this.root;
+
+        const traverse = node => {
+            if (node.left) traverse(node.left);
+            visited.push(node.value);
             if (node.right) traverse(node.right);
         }
         traverse(current);
@@ -101,6 +123,20 @@ tree.insert(20);
 tree.insert(2);
 tree.insert(1);
 
-console.log(tree.DFSPre());
+console.log(tree.DFSIn());
 console.log('hi');
 
+// When to use BFS vs DFS...
+// The time complexity is the same, however the space complexity will be different.
+// If the tree is wider than it is deep, then using depth first search 
+// will limit the memory usage to be minimal because you only need to keep track of
+// one branch of the tree at a time (recursive function) as opposed to keep track of all the queued
+// up nodes by going across the trees width and insering the left and right nodes.
+
+// When to use PreOrder vs PostPrder vs InOrder
+// InOrder, when traversing the entire tree, you will get back and array
+// or whatever structure you populate with the exactly order, 
+// from left to right that the tree is in
+// PreOrder - Usefull when you want to clone a tree/ flatten it out and recreate it
+// from the srealized structure startes with the root of the tree
+// they are very easy to switch between
