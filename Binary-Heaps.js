@@ -14,17 +14,15 @@ class MaxBinaryHeap {
     }
     insert(val) {
         this.values.push(val);
-        const swap = (arr, i, j) => {
-            const tmp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = tmp;
-        } 
-
-        let curr = this.values.length - 1
-        let prnt = Math.floor((curr - 1) / 2 );
+        let curr = this.values.length - 1,
+            prnt = Math.floor((curr - 1) / 2 ),
+            temp;
 
         while (this.values[curr] > this.values[prnt] && prnt >= 0) {
-            swap(this.values, curr, prnt)
+            temp = this.values[curr];
+            this.values[curr] = this.values[prnt];
+            this.values[prnt] = temp;
+            
             curr = prnt
             prnt = Math.floor((curr-1)/2)
         }
@@ -43,7 +41,7 @@ console.log(heap.insert(55));
 console.log(heap.insert(15));
 console.log(heap.insert(10));
 console.log(heap.insert(100));
-console.log(heap.insert(1));
+console.log(heap.insert(1)); 
 
 
 
