@@ -12,21 +12,53 @@ class MaxBinaryHeap {
     constructor() {
         this.values = [];
     }
+    swap(arr, i, j) {
+        let temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    // insert to the end of the heap and bubble up to proper location
     insert(val) {
         this.values.push(val);
-        let curr = this.values.length - 1,
-            prnt = Math.floor((curr - 1) / 2 ),
-            temp;
+        let curr = this.values.length - 1;
+        let prnt = Math.floor((curr - 1) / 2 );
+        let temp;
 
         while (this.values[curr] > this.values[prnt] && prnt >= 0) {
-            temp = this.values[curr];
-            this.values[curr] = this.values[prnt];
-            this.values[prnt] = temp;
-            
+            this.swap(this.values, curr, prnt);
             curr = prnt
             prnt = Math.floor((curr-1)/2)
         }
         return this.values
+    }
+    // replace index where val and sink down / bubble down to where it should reside
+    extractMax() {
+        const max = this.values[0]
+        const end = this.values.pop()
+        if (this.values.length) {
+            this.values[0] = end;
+            this.sinkDown()
+        }
+        return max
+    }
+    sinkDown() {
+        let curr = 0
+        let child = this.values[1] >= this.values[2] ? 1 : 2
+
+        while (this.values[curr] < this.values[child]) {
+            this.swap(this.values, curr, child);
+            curr = child;
+            let leftChildIdx = (curr*2) + 1;
+            let rightChildIdx = (curr*2) + 2;
+
+            if (rightChildIdx < this.values.length && leftChildIdx < this.values.length) {
+                child = this.values[leftChildIdx] >= this.values[rightChildIdx] ? leftChildIdx : rightChildIdx
+            } else if (leftChildIdx < this.values.length) {
+                child = leftChildIdx
+            } else if (rightChildIdx < this.values.length) {
+                child = rightChildIdx
+            }
+        }
     }
 }
 
@@ -37,11 +69,12 @@ console.log(heap.insert(50));
 console.log(heap.insert(33));
 console.log(heap.insert(47));
 console.log(heap.insert(12));
-console.log(heap.insert(55));
-console.log(heap.insert(15));
-console.log(heap.insert(10));
 console.log(heap.insert(100));
-console.log(heap.insert(1)); 
 
+// console.log(heap.extractMax()); 
+// console.log(heap.extractMax()); 
+// console.log(heap.extractMax()); 
+// console.log(heap.extractMax()); 
+// console.log(heap.extractMax()); 
 
-
+//Priority Queeu
