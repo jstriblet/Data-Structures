@@ -72,9 +72,3 @@ console.log(heap.insert(12));
 console.log(heap.insert(100));
 
 // console.log(heap.extractMax()); 
-// console.log(heap.extractMax()); 
-// console.log(heap.extractMax()); 
-// console.log(heap.extractMax()); 
-// console.log(heap.extractMax()); 
-
-//Priority Queeu
