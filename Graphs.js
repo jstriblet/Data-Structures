@@ -62,9 +62,8 @@ class Graph {
                 }
             }
         }
-
         DFS(start)
-        return result
+        return result 
     }
 }
 
@@ -87,7 +86,6 @@ g = new Graph();
  */
 
 // Depth First
-
 g.addVertex('A')
 g.addVertex('B')
 g.addVertex('C')
