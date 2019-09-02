@@ -48,22 +48,39 @@ class Graph {
         this.adjacencyList[v1] = this.adjacencyList[v1].filter(v => v !== v2)
         this.adjacencyList[v2] = this.adjacencyList[v2].filter(v => v !== v1)
     }
-    DFTRec(start) {
+    DFTRecursive(start) {
         let result = [];
         let visited = {};
 
         const DFS = vertex => {
-            if(!this.adjacencyList[vertex]) return
+            if(!this.adjacencyList[vertex]) return null
             visited[vertex] = true;
             result.push(vertex);
-            for (let edge of this.adjacencyList[vertex]) {
-                if (!visited[edge]) {
-                    DFS(edge);
+            for (let neighbor of this.adjacencyList[vertex]) {
+                if (!visited[neighbor]) {
+                    DFS(neighbor);
                 }
             }
         }
         DFS(start)
-        return result  
+        return result
+    }
+    DFSIterative(start) {
+        let stack = []
+        let visited = {}
+        let result = []
+        stack.push(start)
+        while (stack.length > 0) {
+            let current = stack.pop();
+            if (!visited[current]) {
+                visited[current] = true;
+                result.push(current)
+                this.adjacencyList[current].forEach(element => {
+                    stack.push(element)
+                });
+            }
+        }
+        return result
     }
 }
 
@@ -100,4 +117,6 @@ g.addEdge('D', 'E')
 g.addEdge('D', 'F')
 g.addEdge('E', 'F')
 
-console.log(g.DFTRec('A'));
+console.log(g.DFTRecursive('A'));
+console.log(g.DFSIterative('A'));
+console.log(g.DFTRecursive('A'));
