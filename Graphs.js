@@ -1,113 +1,105 @@
 /**
- * Hash Table (aka Hash Map) - most languages have a built in hash table class
- * - Hash tables are used to store key value pairs
- * - the are like arrays, but the keys are not ordered
- * - unlike arrays, hash tables are fiast for all of the following operations:
- * - finding values
- * - adding values
- * - removing values
- * the javascript object is a basic hash table
- * certian things make a hash table optimal 
- * hashing should be constant time
+ * Graph - a collection of nodes and connections
+ * A tree, liked list, are types of graphs
+ * Graph are ususally implements with socal networks
+ * locations and mapping
+ * visual hirarchy
+ * file system optimizations
+ * peer to peer networking 
+ * web crawelers
+ * recommendations : "People also watched"...
+ * Graph Types: 
+ * - Tree - only one path from one node to another
+ * - Undeirected Graph - there is no direction implied with an edge (facebook friends)
+ * - Directed graph - represented with arrows as edges (twitter followers)
+ * - Weighted Graph - edges have assigned values (maps with street lenghts)
+ * Graph Terms:
+ * - Verted - Node
+ * - Edge - connection
+ * Graph is typically stored in an Adjacency Matrix or an Adjacency List
+ * Adjacency list can be implemented using an array, or object or hashmap of some type
+ * Adjacency list - Can take up less space, Faster to iterate over all edges, Can be slopwer to look up specific edge
+ * Adjacency Matrix - Takes up more space (in sparse graphs), slower to iterate over all edges, Faster to lookup specif edge
  * 
- * The below is the reinvention of the wheel.....
+ * We will implement an Adjacency list because real world data is mostly sparcly conected with edges (think IMDB, facebook)
  */
 
-const hash = function(key, arrLen) {
-    let total = 0;
-    let prime = 31;
-    for (let i = 0; i < Math.min(key.length, 100); i++) {
-        let char = key[i];
-        let value = char.charCodeAt(0) - 96;
-        total = (total * prime + value) % arrLen;
-    }
-    return total;
-}
-
-// console.log(hash('pink', 13));
-// console.log(hash('telbirts', 13));
-// console.log(hash('cyan', 13));
-// console.log(hash('goodbye', 13));
-
-/** 
- * Separate Chainging - With separate chainging, at each index in our array,
- * we store values using a more sophisticaed data structure (arrays or linked list)
- * this allows us to store multiple key-value pairs at the same index.
- * 
- * Linesar Probing - when we fid a collision, we search through the array to find the next empty slot.
- * unlike with separate chaining this allows us to store a single key value at each index
+/**
+ * Undirected graph
  */
-
-class HashTable {
-    constructor (size=7) {
-        this.keyMap = new Array(size)
+class Graph {
+    constructor() {
+        this.adjacencyList = {};
     }
-    _hash(key) {
-        let total = 0;
-        let prime = 31;
-        for (let i = 0; i < Math.min(key.length, 100); i++) {
-            let char = key[i];
-            let value = char.charCodeAt(0) - 96;
-            total = (total * prime + value) % this.keyMap.length;
+    addVertex(vertex) {
+        if(!this.adjacencyList[vertex]) this.adjacencyList[vertex] = [];
+    }
+    removeVertex(vertex) {
+        for (let key of this.adjacencyList[vertex]) {
+            this.removeEdge(key, vertex);
         }
-        return total;
+        delete this.adjacencyList[vertex]
     }
-    set(key, value) {
-        let index = this._hash(key.toLowerCase());
-        if (!this.keyMap[index]) {
-            this.keyMap[index] = [];
-        } 
-        this.keyMap[index].push([key, value]);
+    addEdge(v1, v2) {
+        this.adjacencyList[v1].push(v2);
+        this.adjacencyList[v2].push(v1);
     }
-    get(key) {
-        let index = this._hash(key.toLowerCase());
-        let bucket = this.keyMap[index]
-        if (Array.isArray(bucket)) {
-            for (let i = 0; i < bucket.length; i++) {
-                if (bucket[i][0] === key) {
-                    return bucket[i][1]
+    removeEdge(v1, v2) {
+        this.adjacencyList[v1] = this.adjacencyList[v1].filter(v => v !== v2)
+        this.adjacencyList[v2] = this.adjacencyList[v2].filter(v => v !== v1)
+    }
+    DFTRec(start) {
+        let result = [];
+        let visited = {};
+
+        const DFS = vertex => {
+            if(!this.adjacencyList[vertex]) return
+            visited[vertex] = true;
+            result.push(vertex);
+            for (let edge of this.adjacencyList[vertex]) {
+                if (!visited[edge]) {
+                    DFS(edge);
                 }
-            } 
-        }
-        return undefined
-    }
-    keys() {
-        let result = new Set();
-        for(let i = 0; i < this.keyMap.length; i++) {
-            if (this.keyMap[i]) {
-                for (let j = 0; j < this.keyMap[i].length; j++) {
-                    result.add(this.keyMap[i][j][0]);
-                }                
             }
         }
-        return Array.from(result)
-    }
-    values() {
-        let result = new Array();
-        for(let i = 0; i < this.keyMap.length; i++) {
-            if (this.keyMap[i]) {
-                for (let j = 0; j < this.keyMap[i].length; j++) {
-                    result.push(this.keyMap[i][j][1]);
-                }                
-            }
-        }
+
+        DFS(start)
         return result
     }
 }
 
-let myHashTable = new HashTable();
+g = new Graph();
+// g.addVertex('Tokyo');
+// g.addVertex('San Francisco');
+// g.addVertex('Austin');
+// g.addVertex('New York');
+// g.addEdge('Tokyo', 'San Francisco');
+// g.addEdge('Austin', 'San Francisco');
+// g.addEdge('Austin', 'Tokyo');
+// g.addEdge('New York', 'Austin');
+// g.removeEdge('Austin', 'San Francisco');
+// g.removeVertex('Austin');
 
-myHashTable.set('telbirts', 'striblet')
-myHashTable.set('Jonathan', 'striblet')
-myHashTable.set('ashley', 'is cool')
-myHashTable.set('pink', '#ffoods')
-myHashTable.set('blue', '#ffoadfgods')
+/**
+ * Graph Traversal
+ * Depth First Search (Traversal)
+ * Bredth First Search (Traversal)
+ */
 
-myHashTable.get('Jonathan')
+// Depth First
 
-console.log(myHashTable);
-console.log(myHashTable.get('Jonathan'));
-console.log(myHashTable.get('ashley'));
-console.log(myHashTable.values());
-console.log(myHashTable.keys());
-console.log();
+g.addVertex('A')
+g.addVertex('B')
+g.addVertex('C')
+g.addVertex('D')
+g.addVertex('E')
+g.addVertex('F')
+g.addEdge('A', 'B')
+g.addEdge('A', 'C')
+g.addEdge('B', 'D')
+g.addEdge('C', 'E')
+g.addEdge('D', 'E')
+g.addEdge('D', 'F')
+g.addEdge('E', 'F')
+
+console.log(g.DFTRec('A'));
