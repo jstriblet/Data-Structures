@@ -66,12 +66,13 @@ class Graph {
         return result
     }
     DFSIterative(start) {
-        let stack = []
+        let stack = [start]
         let visited = {}
         let result = []
-        stack.push(start)
-        while (stack.length > 0) {
-            let current = stack.pop();
+        let current;
+
+        while (stack.length) {
+            current = stack.pop();
             if (!visited[current]) {
                 visited[current] = true;
                 result.push(current)
@@ -81,6 +82,24 @@ class Graph {
             }
         }
         return result
+    }
+    BFS(start) {
+        let queue =[start]
+        let visited = {}
+        let result = []
+        let current;
+
+        while (queue.length) {
+            current = queue.shift();
+            if(!visited[current]) {
+                visited[current] = true;
+                result.push(current);
+                this.adjacencyList[current].forEach(element => {
+                    queue.push(element)
+                });
+            }
+        }
+    return result
     }
 }
 
@@ -119,4 +138,5 @@ g.addEdge('E', 'F')
 
 console.log(g.DFTRecursive('A'));
 console.log(g.DFSIterative('A'));
-console.log(g.DFTRecursive('A'));
+console.log(g.BFS('A'));
+console.log(g.BFS('A'));
