@@ -136,7 +136,8 @@ g.addEdge('D', 'E')
 g.addEdge('D', 'F')
 g.addEdge('E', 'F')
 
-console.log(g.DFTRecursive('A'));
-console.log(g.DFSIterative('A'));
-console.log(g.BFS('A'));
-console.log(g.BFS('A'));
+// console.log(g.DFTRecursive('A'));
+// console.log(g.DFSIterative('A'));
+// console.log(g.BFS('A'));
+// console.log(g.BFS('A'));
+
