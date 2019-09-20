@@ -46,7 +46,7 @@ class WeightedGraph {
                 if (distance < distances[vertex.node]) {
                     // Update the distance to the vertex
                     distances[vertex.node] = distance;
-                    // Update the th enode by which we got to this vertex
+                    // Update the the node by which we got to this vertex
                     previous[vertex.node] = current;
                     // Add this node to the priority queue
                     q.enqueue(vertex.node, distance);
@@ -88,7 +88,7 @@ class PriorityQue {
         }
         return this.values
     }
-    // replace index where val and sink down / bubble down to where it should reside
+    // replace index where val and sink down to where it should reside
     dequeue() {
         const max = this.values[0]
         const end = this.values.pop()
